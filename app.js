@@ -106,7 +106,7 @@ app.delete("/campgrounds/:id", function (req, res) {
 // Comments Routes
 
 // NEW
-app.get("/campgrounds/:id/comments/new", function (req, res) {
+app.get("/campgrounds/:id/comments/new", isLoggedIn, function (req, res) {
     Campground.findById(req.params.id, function (err, campground) {
         if (err) {
             console.log(err);
@@ -117,7 +117,7 @@ app.get("/campgrounds/:id/comments/new", function (req, res) {
 });
 
 // CREATE
-app.post("/campgrounds/:id/comments", function (req, res) {
+app.post("/campgrounds/:id/comments", isLoggedIn, function (req, res) {
     Campground.findById(req.params.id, function (err, campground) {
         if (err) {
             console.log(err);
@@ -173,3 +173,10 @@ app.get("/logout", function (req, res) {
     req.logout();
     res.redirect("/campgrounds");
 });
+
+function isLoggedIn(req, res, next) {
+    if (req.isAuthenticated()) {
+        return next();
+    }
+    res.redirect("/login");
+}
