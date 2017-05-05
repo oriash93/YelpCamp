@@ -20,7 +20,7 @@ app.listen(port, function () {
 });
 mongoose.connect('mongodb://localhost/yelp_camp');
 
-// RESTful Routes
+// Campground Routes
 app.get("/", function (req, res) {
     res.redirect("/campgrounds");
 });
@@ -33,9 +33,14 @@ app.get("/campgrounds", function (req, res) {
             console.log("Error:", err);
         } else {
             // Render the index page with the retrieved collection
-            res.render("index", { title: "Campgrounds", campgrounds: campgrounds });
+            res.render("campgrounds/index", { title: "Campgrounds", campgrounds: campgrounds });
         }
     });
+});
+
+// NEW
+app.get("/campgrounds/new", function (req, res) {
+    res.render("campgrounds/new", { title: "New Campground" });
 });
 
 // CREATE
@@ -56,11 +61,6 @@ app.post("/campgrounds", function (req, res) {
     });
 });
 
-// NEW
-app.get("/campgrounds/new", function (req, res) {
-    res.render("new", { title: "New Campground" });
-});
-
 // SHOW
 app.get("/campgrounds/:id", function (req, res) {
     // Retrieve the campground with matching ID from database
@@ -69,22 +69,23 @@ app.get("/campgrounds/:id", function (req, res) {
             console.log("Error:", err);
         } else {
             // Render the show page with the retrieved campground            
-            res.render("show", { title: campground.name, campground: campground });
+            res.render("campgrounds/show", { title: campground.name, campground: campground });
         }
     });
 });
 
 // EDIT
 app.get("/campgrounds/:id/edit", function (req, res) {
-    //res.render("edit", { title: campground.name, campground: campground });
+    //res.render("campgrounds/edit", { title: campground.name, campground: campground });
 });
 
 // UPDATE
 app.put("/campgrounds/:id", function (req, res) {
-    //res.render("show", { title: campground.name, campground: campground });
+    //res.render("campgrounds/show", { title: campground.name, campground: campground });
 });
 
 // DESTROY
 app.delete("/campgrounds/:id", function (req, res) {
-    //res.render("show", { title: campground.name, campground: campground });
+    //res.render("campgrounds/show", { title: campground.name, campground: campground });
 });
+
