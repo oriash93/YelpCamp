@@ -5,20 +5,20 @@ var bodyParser = require("body-parser"),
     Comment = require("./models/comment"),
     seedDB = require("./seeds");
 
-seedDB();
 
-// Express app setup
+// Server setup
 var app = express();
+mongoose.connect('mongodb://localhost/yelp_camp');
 app.set("view engine", "ejs");
-app.use(express.static("public"));
+app.use(express.static(__dirname + "/public"));
 app.use(bodyParser.urlencoded({ extended: true }));
+seedDB();
 
 // Start server
 var port = 27017;
 app.listen(port, function () {
     console.log("Yelp Camp Server started on port", port);
 });
-mongoose.connect('mongodb://localhost/yelp_camp');
 
 // Campground Routes
 app.get("/", function (req, res) {
