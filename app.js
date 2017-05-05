@@ -16,6 +16,18 @@ app.use(express.static(__dirname + "/public"));
 app.use(bodyParser.urlencoded({ extended: true }));
 seedDB();
 
+// Passport configurations
+app.use(require("express-session")({
+    secret: "BoomShakaLak",
+    resave: false,
+    saveUninitialized: false
+}));
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new localStrategy(User.authenticate()));
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+
 // Start server
 var port = 27017;
 app.listen(port, function () {
