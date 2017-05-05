@@ -47,14 +47,14 @@ app.get("/campgrounds", function (req, res) {
             console.log("Error:", err);
         } else {
             // Render the index page with the retrieved collection
-            res.render("campgrounds/index", { title: "Campgrounds", campgrounds: campgrounds });
+            res.render("campgrounds/index", { campgrounds: campgrounds });
         }
     });
 });
 
 // NEW
 app.get("/campgrounds/new", function (req, res) {
-    res.render("campgrounds/new", { title: "New Campground" });
+    res.render("campgrounds/new");
 });
 
 // CREATE
@@ -83,24 +83,24 @@ app.get("/campgrounds/:id", function (req, res) {
             console.log("Error:", err);
         } else {
             // Render the show page with the retrieved campground            
-            res.render("campgrounds/show", { title: campground.name, campground: campground });
+            res.render("campgrounds/show", { campground: campground });
         }
     });
 });
 
 // EDIT
 app.get("/campgrounds/:id/edit", function (req, res) {
-    //res.render("campgrounds/edit", { title: campground.name, campground: campground });
+    //res.render("campgrounds/edit", { campground: campground });
 });
 
 // UPDATE
 app.put("/campgrounds/:id", function (req, res) {
-    //res.render("campgrounds/show", { title: campground.name, campground: campground });
+    //res.render("campgrounds/show", { campground: campground });
 });
 
 // DESTROY
 app.delete("/campgrounds/:id", function (req, res) {
-    //res.render("campgrounds/show", { title: campground.name, campground: campground });
+    //res.render("campgrounds/show", { campground: campground });
 });
 
 // Comments Routes
@@ -111,7 +111,7 @@ app.get("/campgrounds/:id/comments/new", function (req, res) {
         if (err) {
             console.log(err);
         } else {
-            res.render("comments/new", { title: "New Comment", campground: campground });
+            res.render("comments/new", { campground: campground });
         }
     });
 });
