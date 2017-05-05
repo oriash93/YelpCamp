@@ -89,3 +89,38 @@ app.delete("/campgrounds/:id", function (req, res) {
     //res.render("campgrounds/show", { title: campground.name, campground: campground });
 });
 
+// Comments Routes
+
+// NEW
+app.get("/campgrounds/:id/comments/new", function (req, res) {
+    Campground.findById(req.params.id, function (err, campground) {
+        if (err) {
+            console.log(err);
+        } else {
+            res.render("comments/new", { title: "New Comment", campground: campground });
+        }
+    });
+});
+
+// CREATE
+app.post("/campgrounds/:id/comments", function (req, res) {
+    Campground.findById(req.params.id, function (err, campground) {
+        if (err) {
+            console.log(err);
+            res.redirect("/campgrounds/");
+        } else {
+            // Create new comment and associate to the campground    
+            Comment.create(req.body.comment, function (err, comment) {
+                if (err) {
+                    console.log("Error:", err);
+                } else {
+                    campground.comments.push(comment);
+                    campground.save();
+                    console.log("Added:", comment, "to", campground.name);
+                    // Redirect to campgrounds page
+                    res.redirect("/campgrounds/" + campground._id);
+                }
+            });
+        }
+    });
+});
