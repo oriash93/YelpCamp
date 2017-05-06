@@ -59,12 +59,27 @@ router.get("/:id", function (req, res) {
 
 // Edit route
 router.get("/:id/edit", function (req, res) {
-    //res.render("campgrounds/edit", { campground: campground });
+    // Retrieve the campground with matching ID from database
+    Campground.findById(req.params.id).populate("comments").exec(function (err, campground) {
+        if (err) {
+            console.log("Error:", err);
+        } else {
+            // Render the edit page with the retrieved campground            
+            res.render("campgrounds/edit", { campground: campground });
+        }
+    });
 });
 
 // Update route
 router.put("/:id", function (req, res) {
-    //res.render("campgrounds/show", { campground: campground });
+    Campground.findByIdAndUpdate(req.params.id, req.body.campground, function(err, campground) {
+        if (err) {
+            console.log(err);
+            res.redirect("/campgrounds");
+        } else {
+            res.redirect("/campgrounds/" + req.params.id);
+        }
+    });    
 });
 
 // Destroy route
