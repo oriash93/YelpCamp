@@ -13,7 +13,7 @@ router.get("/", function (req, res) {
             req.flash("error", "Campground not found");
         } else {
             // Render the index page with the retrieved collection
-            res.render("campgrounds/index", { campgrounds: campgrounds });
+            res.render("campgrounds/index", { campgrounds: campgrounds, page: "campgrounds" });
         }
     });
 });
