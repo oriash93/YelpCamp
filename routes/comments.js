@@ -30,7 +30,7 @@ router.post("/", isLoggedIn, function (req, res) {
                     // Associating comment with user
                     comment.author = {
                         id: req.user._id,
-                            username: req.user.username
+                        username: req.user.username
                     };
                     comment.save();
 
@@ -48,12 +48,37 @@ router.post("/", isLoggedIn, function (req, res) {
     });
 });
 
-// Middleware
+// Edit route
+router.get("/:comment_id/edit", function (req, res) {
+    // Retrieve the comment with matching ID from database
+    Comment.findById(req.params.comment_id, function (err, comment) {
+        if (err) {
+            console.log(err);
+            res.redirect("back");
+        } else {
+            res.render("comments/edit", { comment: comment, campground_id: req.params.id });
+        }
+    });
+});
+
+// Update route
+router.put("/:comment_id", function (req, res) {
+    Comment.findByIdAndUpdate(req.params.comment_id, req.body.comment, function (err, campground) {
+        if (err) {
+            console.log(err);
+            res.redirect("back");
+        } else {
+            res.redirect("/campgrounds/" + req.params.id);
+        }
+    });
+});
+
+// Middlewares
 function isLoggedIn(req, res, next) {
     if (req.isAuthenticated()) {
         return next();
     }
-    res.redirect("/login");
+    res.redirect("back");
 }
 
 module.exports = router;
