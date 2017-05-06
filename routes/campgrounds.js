@@ -30,6 +30,7 @@ router.post("/", middleware.isLoggedIn, function (req, res) {
         name: req.body.campgroundName,
         image: req.body.image,
         description: req.body.description,
+        price: req.body.price,
         author: {
             id: req.user._id,
             username: req.user.username
