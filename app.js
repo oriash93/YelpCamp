@@ -13,7 +13,7 @@ var User = require("./models/user"),
 
 // Routes
 var commentRoutes = require("./routes/comments"),
-    campgroundRoutes = require("./routes/campgrounds");
+    campgroundRoutes = require("./routes/campgrounds"),
     indexRoutes = require("./routes/index");
 
 // Express setup
