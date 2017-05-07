@@ -7,8 +7,8 @@ var userSchema = new mongoose.Schema({
 });
 var options = {
     errorMessages: {
-        IncorrectPasswordError: 'Password is incorrect',
-        IncorrectUsernameError: 'Username is incorrect'
+        IncorrectPasswordError: "Password is incorrect",
+        IncorrectUsernameError: "Username is incorrect"
     }
 }
 

@@ -26,8 +26,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(methodOverride("_method"));
 
 // Database setup
-mongoose.connect('mongodb://localhost/yelp_camp');
 seedDB();
+mongoose.connect("mongodb://localhost/yelp_camp");
 
 // Passport configurations
 app.use(require("express-session")({
