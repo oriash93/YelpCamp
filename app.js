@@ -7,6 +7,9 @@ var seedDB = require("./seeds"),
     localStrategy = require("passport-local"),
     methodOverride = require("method-override");
 
+const session = require('express-session');
+const MongoStore = require('connect-mongo')(session);
+
 // Data models
 var User = require("./models/user"),
     Campground = require("./models/campground"),
@@ -26,16 +29,21 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(methodOverride("_method"));
 
 // Database setup
-mongoose.connect("mongodb://localhost/yelp_camp");
+mongoose.connect(process.env.DATABASEURL);
+
 // Uncomment the next line to seed the database
 //seedDB(); 
 
-// Passport configurations
-app.use(require("express-session")({
+// Session configurations
+app.use(session({
     secret: "BoomShakaLak",
     resave: false,
-    saveUninitialized: false
+    saveUninitialized: false,
+    store: new MongoStore({ mongooseConnection: mongoose.connection }),
+    cookie: { maxAge: 180 * 60 * 1000 }
 }));
+
+// Passport configurations
 app.use(passport.initialize());
 app.use(passport.session());
 passport.use(new localStrategy(User.authenticate()));
@@ -56,6 +64,6 @@ app.use("/campgrounds/:id/comments", commentRoutes);
 
 // Start server
 var port = 27017;
-app.listen(port, function () {
+app.listen(process.env.PORT || port, process.env.IP, function () {
     console.log("Yelp Camp Server started on port", port);
 });
