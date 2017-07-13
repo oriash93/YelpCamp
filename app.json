@@ -1,0 +1,20 @@
+{
+  "name": "YelpCamp",
+  "scripts": {
+  },
+  "env": {
+    "DATABASEURL": {
+      "required": true
+    }
+  },
+  "formation": {
+  },
+  "addons": [
+
+  ],
+  "buildpacks": [
+    {
+      "url": "heroku/nodejs"
+    }
+  ]
+}
