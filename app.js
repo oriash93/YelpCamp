@@ -7,6 +7,8 @@ var seedDB = require("./seeds"),
     localStrategy = require("passport-local"),
     methodOverride = require("method-override");
 
+require("dotenv").config();
+
 const session = require('express-session');
 const MongoStore = require('connect-mongo')(session);
 
